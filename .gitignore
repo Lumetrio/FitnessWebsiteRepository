@@ -1,0 +1,26 @@
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+*.cache
+.vs/
+# Сборочные артефакты
+bin/
+obj/
+*.dll
+*.exe
+
+# Пакетные менеджеры
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# Логи
+*.log
+
+
+
+SomeApp/CheckGrounds/Program.cs
+SomeApp/CheckGrounds/Program.cs
+SomeApp/CheckGrounds/Program.cs
