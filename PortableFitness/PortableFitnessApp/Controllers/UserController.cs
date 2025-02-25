@@ -8,9 +8,9 @@ namespace PortableFitnessApp.Controllers
     public class UserController : Controller
     {
         // GET: UserController
-        public Database.Contexts.AppContext UserDataBase { get; set; }
+        public Database.Contexts.AppDbContext UserDataBase { get; set; }
 
-        public UserController(Database.Contexts.AppContext userDataBase)
+        public UserController(Database.Contexts.AppDbContext userDataBase)
         {
             UserDataBase = userDataBase;
         }

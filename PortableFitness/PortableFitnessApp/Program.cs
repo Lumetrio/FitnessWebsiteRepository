@@ -10,29 +10,19 @@ var builder = WebApplication.CreateBuilder(args);
 // первым делом подключим базу данных .В ней будут храниться данные пользователя. Кроме того , попробуем записать туда так же и продукты.
 builder.Services.AddControllersWithViews();
 //
-builder.Services.AddScoped<Database.Contexts.AppContext>();
+
 //builder.Services.AddScoped<UserContext>();
  
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")??throw new ApplicationException("you can't get connection from appsettings");
-//
-//builder.Services.AddDbContext<UserContext>(options=>options.UseSqlServer(connectionString));
-builder.Services.AddDbContext<Database.Contexts.AppContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("PortableFitnessApp")));
-var app = builder.Build();
-using (SqlConnection connection = new SqlConnection(connectionString))
-{
-    try
-    {
-        connection.Open();
-        Console.WriteLine("Подключение к базе данных успешно установлено!");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine("Ошибка подключения: " + ex.Message);
-    }
-}
 
-// Configure the HTTP request pipeline.
+// регистрирует как Scoped по умолчанию?
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+var app = builder.Build();
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

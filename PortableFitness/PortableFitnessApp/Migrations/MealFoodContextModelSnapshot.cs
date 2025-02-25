@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace PortableFitnessApp.Migrations
 {
-    [DbContext(typeof(Database.Contexts.AppContext))]
+    [DbContext(typeof(Database.Contexts.AppDbContext))]
     partial class MealFoodContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
