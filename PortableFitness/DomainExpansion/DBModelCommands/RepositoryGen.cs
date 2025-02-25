@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Database.DBModelCommands
 {
-    public class Repository<T> : IBaseRepository<T> where T : class
+    public class RepositoryGen<T> : IBaseRepository<T> where T : class
     {
         private readonly AppDbContext _context;
 
    
         protected readonly DbSet<T> _dbSet;
 
-        public Repository(AppDbContext context)
+        public RepositoryGen(AppDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
@@ -30,34 +30,26 @@ namespace Database.DBModelCommands
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id) ?? throw new Exception("Can't find element with this id") ;
         }
 
-        public async Task AddAsync(T entity)
+        public async Task CreateAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
-            return Task.CompletedTask;
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(T entity)
+        public async Task DeleteAsync(T entity)
         {
             _dbSet.Remove(entity);
-            return Task.CompletedTask;
+            await _context.SaveChangesAsync();
         }
-
-        public Task CreateAsync(T entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<T> IBaseRepository<T>.UpdateAsync(T entity)
-        {
-            throw new NotImplementedException();
-        }
+ 
     }
 }

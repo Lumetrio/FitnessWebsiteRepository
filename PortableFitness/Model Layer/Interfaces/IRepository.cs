@@ -15,6 +15,6 @@ namespace Database.Interfaces___Копировать
         Task CreateAsync(T entity);
         IQueryable<T> GetAll();
         Task DeleteAsync(T entity);
-        Task<T> UpdateAsync(T entity);
+        Task UpdateAsync(T entity);
     }
 }

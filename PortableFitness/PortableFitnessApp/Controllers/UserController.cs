@@ -14,7 +14,11 @@ namespace PortableFitnessApp.Controllers
         {
             UserDataBase = userDataBase;
         }
-
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
 
         //Авторизация и занос в бд
         [HttpGet]
