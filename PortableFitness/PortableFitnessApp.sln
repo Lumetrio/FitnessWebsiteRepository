@@ -5,9 +5,17 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortableFitnessApp", "PortableFitnessApp\PortableFitnessApp.csproj", "{A7255D1D-442A-4296-B45D-FD0166C58AFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLayer", "DatabaseLayer\DatabaseLayer.csproj", "{C846582D-371C-47A9-94B1-8E6672FD8ED3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabaseLayer", "DatabaseLayer", "{86561B44-2515-419B-9811-C709F76EAC82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelLayer", "ModelLayer\ModelLayer.csproj", "{1DE57216-C924-428B-A2F4-02F508330372}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain Layer", "Domain Layer", "{F7186665-6807-4F84-BAD3-75C254586A05}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "DomainExpansion\Database.csproj", "{4D8DE9D3-7F87-46DC-8D9C-BD3A76FAF232}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model Layer", "Model Layer\Model Layer.csproj", "{7C267CE6-3F74-47B4-ACC1-327CEA47A9CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application Layer", "Application Layer", "{02F3690D-F4C7-4A03-968B-9CB44F3F10C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business logic Layer", "Business logic Layer\Business logic Layer.csproj", "{0BCE4E37-2E8C-4FD0-8B83-F6723567BD99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,17 +27,26 @@ Global
 		{A7255D1D-442A-4296-B45D-FD0166C58AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7255D1D-442A-4296-B45D-FD0166C58AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7255D1D-442A-4296-B45D-FD0166C58AFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C846582D-371C-47A9-94B1-8E6672FD8ED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C846582D-371C-47A9-94B1-8E6672FD8ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C846582D-371C-47A9-94B1-8E6672FD8ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C846582D-371C-47A9-94B1-8E6672FD8ED3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1DE57216-C924-428B-A2F4-02F508330372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1DE57216-C924-428B-A2F4-02F508330372}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1DE57216-C924-428B-A2F4-02F508330372}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1DE57216-C924-428B-A2F4-02F508330372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D8DE9D3-7F87-46DC-8D9C-BD3A76FAF232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D8DE9D3-7F87-46DC-8D9C-BD3A76FAF232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D8DE9D3-7F87-46DC-8D9C-BD3A76FAF232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D8DE9D3-7F87-46DC-8D9C-BD3A76FAF232}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C267CE6-3F74-47B4-ACC1-327CEA47A9CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C267CE6-3F74-47B4-ACC1-327CEA47A9CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C267CE6-3F74-47B4-ACC1-327CEA47A9CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C267CE6-3F74-47B4-ACC1-327CEA47A9CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BCE4E37-2E8C-4FD0-8B83-F6723567BD99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BCE4E37-2E8C-4FD0-8B83-F6723567BD99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BCE4E37-2E8C-4FD0-8B83-F6723567BD99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BCE4E37-2E8C-4FD0-8B83-F6723567BD99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D8DE9D3-7F87-46DC-8D9C-BD3A76FAF232} = {86561B44-2515-419B-9811-C709F76EAC82}
+		{7C267CE6-3F74-47B4-ACC1-327CEA47A9CA} = {F7186665-6807-4F84-BAD3-75C254586A05}
+		{0BCE4E37-2E8C-4FD0-8B83-F6723567BD99} = {02F3690D-F4C7-4A03-968B-9CB44F3F10C2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C1E57D7-4C7C-4AFF-B47E-84D0C7BB5FC3}
