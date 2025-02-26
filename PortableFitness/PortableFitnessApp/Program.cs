@@ -18,7 +18,7 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 
 // регистрирует как Scoped по умолчанию?
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),x=>x.MigrationsAssembly("PortableFitnessApp")));
 
 
 var app = builder.Build();

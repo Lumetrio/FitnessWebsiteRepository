@@ -16,38 +16,41 @@ namespace FitnessLogic.Models
         /// <summary>
         /// Имя
         /// </summary>
-        [JsonPropertyName("name")]
+        //[JsonPropertyName("name")]
         [Required, MaxLength(30), MinLength(3)]
         public string Name { get; private set; }
 
+        [Required, MaxLength(30), MinLength(7)]
+       [ RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d).+$", ErrorMessage = "Пароль слишком прост")] // пароль содержит 1 букву И 1 цифру мин
+        public string Password { get; private set; }
         /// <summary>
         /// Пол
         /// </summary>
-        [JsonPropertyName("gender")]
+        //[JsonPropertyName("gender")]
         public Gender Gender { get; private set; }
 
         /// <summary>
         /// Дата рождения
         /// </summary>
-        [JsonPropertyName("birthDate")]
+        //[JsonPropertyName("birthDate")]
         public DateTime BirthDate { get; private set; }
 
         /// <summary>
         /// Вес
         /// </summary>
-        [JsonPropertyName("weight")]
+        //[JsonPropertyName("weight")]
         public double Weight { get; set; }
 
         /// <summary>
         /// Рост
         /// </summary>
-        [JsonPropertyName("height")]
+        //[JsonPropertyName("height")]
         public double Height { get; set; }
 
         /// <summary>
         /// Уровень активности
         /// </summary>
-        [JsonPropertyName("activityLevel")]
+        //[JsonPropertyName("activityLevel")]
         public ActivityLevel ActivityLevel { get;  }
        
        
@@ -55,7 +58,7 @@ namespace FitnessLogic.Models
         /// <summary>
         /// Возраст (вычисляемое свойство)
         /// </summary>
-        [JsonIgnore]
+        //[JsonIgnore]
         public int Age
         {
             get
@@ -75,7 +78,7 @@ namespace FitnessLogic.Models
         /// <summary>
         /// Конструктор для десериализации
         /// </summary>
-        [JsonConstructor]
+        //[JsonConstructor]
         public User(string name, Gender gender, DateTime birthDate, double weight, double height, ActivityLevel activityLevel)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Имя пользователя не может быть пустым", nameof(name));
@@ -113,11 +116,7 @@ namespace FitnessLogic.Models
         /// <summary>
         /// Конструктор для создания пользователей в коде
         /// </summary>
-        public User(string name, GenderType genderType, DateTime birthDate, double weight, double height, ActivityLevel activityLevel)
-            : this(name, genderType.Gender, birthDate, weight, height, activityLevel)
-        {
-            // Этот конструктор просто вызывает основной конструктор для десериализации
-        }
+       
         public ICollection<Meal> Meals { get; set; }
         public override string ToString()
         {

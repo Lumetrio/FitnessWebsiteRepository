@@ -1,5 +1,5 @@
 ﻿using Database.Contexts;
- 
+using FitnessLogic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +19,11 @@ namespace PortableFitnessApp.Controllers
         {
             return View();
         }
-
+        [HttpPost]
+        public ActionResult Register(User user)
+        {
+            return View();
+        }
         //Авторизация и занос в бд
         [HttpGet]
         public ActionResult Authorize()
