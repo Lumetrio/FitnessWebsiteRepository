@@ -1,7 +1,9 @@
 ﻿using Database.Contexts;
+using Database.DBModelCommands;
 using FitnessLogic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static PortableFitnessApp.DTO.UserRegistrationDTO;
 
 namespace PortableFitnessApp.Controllers
 {
@@ -9,10 +11,11 @@ namespace PortableFitnessApp.Controllers
     {
         // GET: UserController
         public Database.Contexts.AppDbContext UserDataBase { get; set; }
-
-        public UserController(Database.Contexts.AppDbContext userDataBase)
+        public UserRepository UserRepository { get; private set; }
+        public UserController(Database.Contexts.AppDbContext userDataBase,UserRepository userRepository)
         {
             UserDataBase = userDataBase;
+            UserRepository = userRepository;
         }
         [HttpGet]
         public ActionResult Register()
@@ -20,9 +23,17 @@ namespace PortableFitnessApp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Register(User user)
+        public async Task<ActionResult> Register(UserRegisterDto user)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                // плохая валидация- ошибка
+                return BadRequest(ModelState);
+            }
+
+            User user1 = (User)user;
+            await  UserRepository.CreateAsync(user1);
+            return Ok();
         }
         //Авторизация и занос в бд
         [HttpGet]

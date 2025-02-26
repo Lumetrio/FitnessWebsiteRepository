@@ -1,7 +1,9 @@
 
 using Database.Contexts;
+using Database.DBModelCommands;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,13 +14,13 @@ builder.Services.AddControllersWithViews();
 //
 
 //builder.Services.AddScoped<UserContext>();
- 
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")??throw new ApplicationException("you can't get connection from appsettings");
 
-// регистрирует как Scoped по умолчанию?
+// регистрирует как Scoped по умолчанию
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),x=>x.MigrationsAssembly("PortableFitnessApp")));
+builder.Services.AddScoped<UserRepository>();
 
 
 var app = builder.Build();

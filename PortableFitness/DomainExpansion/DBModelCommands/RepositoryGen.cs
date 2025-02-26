@@ -12,7 +12,7 @@ namespace Database.DBModelCommands
 {
     public class RepositoryGen<T> : IBaseRepository<T> where T : class
     {
-        private readonly AppDbContext _context;
+        protected readonly AppDbContext _context;
 
    
         protected readonly DbSet<T> _dbSet;
@@ -33,7 +33,7 @@ namespace Database.DBModelCommands
             return await _dbSet.FindAsync(id) ?? throw new Exception("Can't find element with this id") ;
         }
 
-        public async Task CreateAsync(T entity)
+        public virtual async Task CreateAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
