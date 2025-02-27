@@ -7,8 +7,6 @@ using PortableFitnessApp.DTO.Attributes;
 
 namespace PortableFitnessApp.DTO
 {
-    public class UserRegistrationDTO
-    {
         public class UserRegisterDto
         {
             [UniqueUserName]
@@ -50,5 +48,4 @@ namespace PortableFitnessApp.DTO
                 return user;
             }
         }
-    }
 }

@@ -8,7 +8,35 @@ body {
     background-size: cover;
     background-position: center;
 }
+/*Errors*/
+.validation-error {
+    color: #ff0000;
+    font-size: 0.9em;
+    display: block;
+    margin-top: 5px;
+}
 
+
+input.input-validation-error {
+    border-color: #ff0000;
+}
+
+.field-validation-error {
+    color: #ff0000; 
+    font-size: 0.9em;
+    display: block;
+    margin-top: 5px;
+}
+
+.validation-summary-errors {
+    color: #ff0000; 
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.field-validation-valid {
+    display: none;  
+}
 .registration-container {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;

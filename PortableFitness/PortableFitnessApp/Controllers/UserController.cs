@@ -3,16 +3,16 @@ using Database.DBModelCommands;
 using FitnessLogic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static PortableFitnessApp.DTO.UserRegistrationDTO;
+using PortableFitnessApp.DTO;
 
 namespace PortableFitnessApp.Controllers
 {
     public class UserController : Controller
     {
-        // GET: UserController
-        public Database.Contexts.AppDbContext UserDataBase { get; set; }
+       
+        public AppDbContext UserDataBase { get; set; }
         public UserRepository UserRepository { get; private set; }
-        public UserController(Database.Contexts.AppDbContext userDataBase,UserRepository userRepository)
+        public UserController( AppDbContext userDataBase,UserRepository userRepository)
         {
             UserDataBase = userDataBase;
             UserRepository = userRepository;
@@ -23,19 +23,29 @@ namespace PortableFitnessApp.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> Register(UserRegisterDto user)
+        public async Task<ActionResult> Register(UserRegisterDto model)
         {
             if (!ModelState.IsValid)
             {
-                // плохая валидация- ошибка
-                return BadRequest(ModelState);
+                return View(model);
             }
 
-            User user1 = (User)user;
-            await  UserRepository.CreateAsync(user1);
-            return Ok();
+            try
+            {
+                
+                var user1 = (User)model;
+				//BCrypt.Net.BCrypt.HashPassword(password);
+				await UserRepository.CreateAsync(user1);
+                return RedirectToAction("Index","Home");
+            }
+            catch (Exception ex)
+            {
+                 
+                ModelState.AddModelError("", $"Ошибка при регистрации: {ex.Message}");
+                return View(model);
+            }
         }
-        //Авторизация и занос в бд
+        //Авторизация 
         [HttpGet]
         public ActionResult Authorize()
         {

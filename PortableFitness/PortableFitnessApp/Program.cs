@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // первым делом подключим базу данных .¬ ней будут хранитьс€ данные пользовател€.  роме того , попробуем записать туда так же и продукты.
 builder.Services.AddControllersWithViews();
-//
+
 
 //builder.Services.AddScoped<UserContext>();
 
