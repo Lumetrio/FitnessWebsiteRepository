@@ -1,5 +1,6 @@
 ﻿using Database.DBModelCommands;
 using FitnessLogic.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,14 @@ namespace Business_logic_Layer
     public class UserService
     {
         private readonly UserRepository _userRepository;
+		private readonly IPasswordHasher<UserRegisterDto> _passwordHasher;
+		public UserService(UserRepository userRepository, IPasswordHasher<User> passwordHasher)
+		{
+			_userRepository = userRepository;
+			_passwordHasher = passwordHasher;
+		}
 
-        public UserService(UserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
-
-        public async Task<(bool Success, string ErrorMessage)> RegisterUserAsync(User user)
+		public async Task<(bool Success, string ErrorMessage)> RegisterUserAsync(User user)
         {
             if (!await _userRepository.IsUsernameUniqueAsync(user.Name))
             {

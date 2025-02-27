@@ -1,8 +1,10 @@
 
 using Database.Contexts;
 using Database.DBModelCommands;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using PortableFitnessApp.DTO;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 // первым делом подключим базу данных .¬ ней будут хранитьс€ данные пользовател€.  роме того , попробуем записать туда так же и продукты.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationScheme);
+builder.Services.AddIdentityCore<UserRegisterDto>()
+    .AddEntityFrameworkStores<AppDbContext>().AddApiEndpoints();
 
 //builder.Services.AddScoped<UserContext>();
 
@@ -21,6 +27,17 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),x=>x.MigrationsAssembly("PortableFitnessApp")));
 builder.Services.AddScoped<UserRepository>();
+
+
+
+
+builder.Services.AddDefaultIdentity<UserRegisterDto>(options => {
+	options.Password.RequireDigit = true;
+	options.Password.RequiredLength = 8;
+    options.Password.RequireLowercase = true;
+    
+})
+.AddEntityFrameworkStores<AppDbContext>();
 
 
 var app = builder.Build();

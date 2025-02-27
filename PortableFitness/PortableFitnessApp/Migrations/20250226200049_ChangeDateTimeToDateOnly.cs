@@ -65,14 +65,12 @@ namespace PortableFitnessApp.Migrations
         }
         protected override void Down(MigrationBuilder migrationBuilder)
         {
- 
             migrationBuilder.AddColumn<DateTime>(
                 name: "BirthDateTemp",
                 table: "Users",
                 type: "datetime2",
                 nullable: true);
 
-         
             migrationBuilder.Sql(
                 @"UPDATE Users 
           SET BirthDateTemp = CAST(BirthDate AS datetime2)");
