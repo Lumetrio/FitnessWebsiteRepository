@@ -1,43 +1,69 @@
 
+using Business_logic_Layer;
 using Database.Contexts;
 using Database.DBModelCommands;
+using FitnessLogic.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using PortableFitnessApp.DTO;
+using System.Reflection;
 
 
-var builder = WebApplication.CreateBuilder(args);
+ var builder = WebApplication.CreateBuilder(args);
 
 // допустим я буду использовать файл ресурсов. Монтировать нужные строки из него в список который буду отправлять на страницу.
 // Add services to the container.
 // первым делом подключим базу данных .В ней будут храниться данные пользователя. Кроме того , попробуем записать туда так же и продукты.
-builder.Services.AddControllersWithViews();
 
+//БДШКА
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new ApplicationException("you can't get connection from appsettings");
+builder.Services.AddDbContext<AppDbContext>(options =>
+	options.UseSqlServer(connectionString, x => x.MigrationsAssembly("PortableFitnessApp")));
+
+
+//IDENTITY
+
+builder.Services.AddAuthentication()/*.AddCookie(IdentityConstants.ApplicationScheme)*/;
 builder.Services.AddAuthorization();
-builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationScheme);
-builder.Services.AddIdentityCore<UserRegisterDto>()
-    .AddEntityFrameworkStores<AppDbContext>().AddApiEndpoints();
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+	options.Password.RequireDigit = true;
+	options.Password.RequiredLength = 8;
+	options.Password.RequireLowercase = true;
+})
+	.AddEntityFrameworkStores<AppDbContext>()
+	.AddDefaultTokenProviders();
+// сделать в будущем сброс пароля. и email хотя для этого придётся нотификация , так что можно по проверке спец вопроса? который тоже будет хэшироваться??
 
 //builder.Services.AddScoped<UserContext>();
 
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")??throw new ApplicationException("you can't get connection from appsettings");
-
 // регистрирует как Scoped по умолчанию
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),x=>x.MigrationsAssembly("PortableFitnessApp")));
+
+//СЕРВИСЫ
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<UserService>();
 
 
 
 
-builder.Services.AddDefaultIdentity<UserRegisterDto>(options => {
-	options.Password.RequireDigit = true;
-	options.Password.RequiredLength = 8;
-    options.Password.RequireLowercase = true;
-    
-})
-.AddEntityFrameworkStores<AppDbContext>();
+
+
+
+// добавляем swagger
+builder.Services.AddSwaggerGen(c =>
+{
+	c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+
+	//// Добавляем XML-документацию
+	//var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+	//var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+	//c.IncludeXmlComments(xmlPath);
+});
+
+builder.Services.AddControllersWithViews();
+
 
 
 var app = builder.Build();
@@ -47,13 +73,23 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+ 
+}
+
+if (app.Environment.IsDevelopment())
+{
+	app.UseSwagger();
+	app.UseSwaggerUI(c =>
+	{
+		c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+	});
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

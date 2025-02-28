@@ -23,11 +23,11 @@ namespace Database.DBModelCommands
 
         public async Task<bool> IsUsernameUniqueAsync(string username)
         {
-            return !await _dbSet.AnyAsync(u => u.Name == username);
+            return !await _dbSet.AnyAsync(u => u.UserName == username);
         }
         public override async Task CreateAsync(User user)
         {
-            if (!await IsUsernameUniqueAsync(user.Name))
+            if (!await IsUsernameUniqueAsync(user.UserName))
             {
                 throw new Exception("User is not unique");
             }

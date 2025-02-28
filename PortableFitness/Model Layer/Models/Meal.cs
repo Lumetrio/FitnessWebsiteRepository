@@ -19,7 +19,7 @@ namespace ClassLibrary1.Models
         public ICollection<MealFood> MealFoods { get; set; }
         public DateTime MealDate { get; set; } = DateTime.Now;
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public Meal()
         {

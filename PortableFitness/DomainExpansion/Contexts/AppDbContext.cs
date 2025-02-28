@@ -1,6 +1,7 @@
 ﻿using ClassLibrary1.Models;
 using Database.RepositoryObjects;
 using FitnessLogic.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,8 @@ namespace Database.Contexts
     /// <summary>
     /// База данных еды приёмов пищи и всего вместе.
     /// </summary>
-    public class AppDbContext : DbContext
-    {
+    public class AppDbContext : IdentityDbContext<User>
+	{
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<MealFood> MealFoods { get; set; }
@@ -29,11 +30,24 @@ namespace Database.Contexts
         //нужно сделать миграции.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MealFood>()
+
+			base.OnModelCreating(modelBuilder);
+          
+			modelBuilder.Entity<MealFood>()
            .HasKey(mf => new { mf.MealId, mf.FoodId }); // Составной ключ
 
-            //  один ко многим между User и Meal
-            modelBuilder.Entity<Meal>()
+            // игнорирую ненужные поля
+			modelBuilder.Entity<User>(entity =>
+			{
+				entity.Ignore(u => u.Email);
+				entity.Ignore(u => u.EmailConfirmed);
+				entity.Ignore(u => u.PhoneNumber);
+				entity.Ignore(u => u.PhoneNumberConfirmed);
+				entity.Property(u => u.UserName).IsRequired().HasMaxLength(30);
+			});
+
+			//  один ко многим между User и Meal
+			modelBuilder.Entity<Meal>()
                 .HasOne(m => m.User)
                 .WithMany(u => u.Meals)
                 .HasForeignKey(m => m.UserId);
@@ -49,8 +63,8 @@ namespace Database.Contexts
                 .HasOne(mf => mf.Food)
                 .WithMany(f => f.MealFoods)
                 .HasForeignKey(mf => mf.FoodId);
-
-            base.OnModelCreating(modelBuilder);
+            //modelBuilder.HasDefaultSchema("identity"); 
+         
         }
 
     }

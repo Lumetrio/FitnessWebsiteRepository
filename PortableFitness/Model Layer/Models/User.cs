@@ -1,26 +1,44 @@
 ﻿using ClassLibrary1;
 using ClassLibrary1.Models;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace FitnessLogic.Models
 {
 
     // мб ему нужно автоматически считать сколько калорий надо?
-    public class User
+    public class User:IdentityUser
     {
-        #region Набор свойств
+		#region Набор свойств
+		// Игнорируем ненужные поля
 
-        public int UserId { get; set; }
+		[NotMapped]
+		public override string Email { get; set; }
+
+		[NotMapped]
+		public override bool EmailConfirmed { get; set; }
+
+		[NotMapped]
+		public override string PhoneNumber { get; set; }
+
+		[NotMapped]
+		public override bool PhoneNumberConfirmed { get; set; }
+        [NotMapped]
+		public override string? NormalizedEmail { get; set; } // пока хз почему ты не убралась
+        [NotMapped]
+		public override bool TwoFactorEnabled { get; set; }
+	
         /// <summary>
         /// Имя
         /// </summary>
         //[JsonPropertyName("name")]
         
-        public string Name { get; private set; }
+        //public string UserName { get; private set; }
 
-        public string Password { get; private set; }
+        //public string PasswordHash { get;  set; }
         /// <summary>
         /// Пол
         /// </summary>
@@ -84,7 +102,7 @@ namespace FitnessLogic.Models
         public User(string name, string password, Gender gender, DateOnly  birthDate, double weight, double height, ActivityLevel activityLevel)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Имя пользователя не может быть пустым", nameof(name)); // такое произойти не должно поэтому пока как доп мера безоп.
-            Name = name;
+            UserName = name;
 
             BirthDate = birthDate;
 
@@ -94,7 +112,7 @@ namespace FitnessLogic.Models
             Weight = weight;
             Height = height;
             ActivityLevel = activityLevel;
-            Password = password;
+            PasswordHash = password;
         }
         /// <summary>
         /// конструктор без параметров для бд
@@ -111,7 +129,7 @@ namespace FitnessLogic.Models
         public ICollection<Meal> Meals { get; set; }
         public override string ToString()
         {
-            return $"{Name} ({Age} years old)";
+            return $"{UserName} ({Age} years old)";
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Numerics;
-using System.Runtime.CompilerServices;
 using ClassLibrary1.Models;
 using FitnessLogic.Models;
 using PortableFitnessApp.DTO.Attributes;
@@ -36,16 +34,16 @@ namespace PortableFitnessApp.DTO
             [Range(0, 3, ErrorMessage = "Уровень активности должен быть от 0 до 3.")]
             public int ActivityLevel { get; set; }
 
-    //        public static explicit operator User(UserRegisterDto userDto)
-    //        {
-    //            if (userDto == null)
-    //            {
-    //                throw new ArgumentNullException(nameof(userDto), "DTO не может быть null.");
-    //            }
-    //            var user = new User(userDto.Name, userDto.Password, userDto.Gender, userDto.BirthDate, userDto.Weight, userDto.Height,(ActivityLevel)userDto.ActivityLevel);
-    //// вопрос нужно ли для пользователя связать напрямую nutritionnorms
+        public static explicit operator User(UserRegisterDto userDto)
+        {
+            if (userDto == null)
+            {
+                throw new ArgumentNullException(nameof(userDto), "DTO не может быть null.");
+            }
+            var user = new User(userDto.Name, userDto.Password, userDto.Gender, userDto.BirthDate, userDto.Weight, userDto.Height, (ActivityLevel)userDto.ActivityLevel);
+            // вопрос нужно ли для пользователя связать напрямую nutritionnorms
 
-    //            return user;
-    //        }
+            return user;
         }
+    }
 }

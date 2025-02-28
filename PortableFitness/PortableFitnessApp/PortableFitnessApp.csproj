@@ -21,9 +21,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="4.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Business logic Layer\Business logic Layer.csproj" />
     <ProjectReference Include="..\DomainExpansion\Database.csproj" />
     <ProjectReference Include="..\Model Layer\Model Layer.csproj" />
   </ItemGroup>

@@ -12,7 +12,7 @@ namespace Business_logic_Layer
     public class UserService
     {
         private readonly UserRepository _userRepository;
-		private readonly IPasswordHasher<UserRegisterDto> _passwordHasher;
+		private readonly IPasswordHasher<User> _passwordHasher;
 		public UserService(UserRepository userRepository, IPasswordHasher<User> passwordHasher)
 		{
 			_userRepository = userRepository;
@@ -21,11 +21,11 @@ namespace Business_logic_Layer
 
 		public async Task<(bool Success, string ErrorMessage)> RegisterUserAsync(User user)
         {
-            if (!await _userRepository.IsUsernameUniqueAsync(user.Name))
+            if (!await _userRepository.IsUsernameUniqueAsync(user.UserName))
             {
                 return (false, "Это имя пользователя уже занято. Пожалуйста, выберите другое.");
             }
-
+         user.PasswordHash=_passwordHasher.HashPassword(user, user.PasswordHash);
             await _userRepository.CreateAsync(user);
             return (true, string.Empty);
         }
