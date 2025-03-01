@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PortableFitnessApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250301193454_Addedemail")]
-    partial class Addedemail
+    [Migration("20250301202721_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

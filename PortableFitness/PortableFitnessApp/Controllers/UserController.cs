@@ -61,7 +61,7 @@ namespace PortableFitnessApp.Controllers
 		}
 		//Авторизация 
 		[HttpGet]
-		public ActionResult Authorize()
+		public ActionResult Login()
 		{
 			return View();
 		}

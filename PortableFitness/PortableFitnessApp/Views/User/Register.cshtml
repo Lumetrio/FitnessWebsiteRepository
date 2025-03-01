@@ -44,7 +44,7 @@
 			<!-- Дата рождения -->
 			<div class="form-group">
 				<label for="BirthDate">Дата рождения:</label>
-				<input type="date" id="BirthDate" name="BirthDate" required>
+				<input type="date" id="BirthDate" name="BirthDate" max="@DateTime.Now.ToString("yyyy-MM-dd")" required>
 				<span class="text-danger" asp-validation-for="BirthDate"></span>
 			</div>
 			<!-- Вес -->
