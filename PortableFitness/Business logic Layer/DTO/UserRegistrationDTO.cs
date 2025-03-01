@@ -7,7 +7,10 @@ namespace PortableFitnessApp.DTO
 {
         public class UserRegisterDto
         {
-            [UniqueUserName]
+	
+        [EmailAddress]
+		public string Email { get; set; }
+        [UniqueUserName]
             [Required(ErrorMessage = "Имя пользователя не может быть пустым")]
             [MaxLength(30, ErrorMessage = "Имя пользователя не может быть длиннее 30 символов")]
             [MinLength(3, ErrorMessage = "Имя пользователя не может быть короче 3 символов")]
@@ -40,7 +43,7 @@ namespace PortableFitnessApp.DTO
             {
                 throw new ArgumentNullException(nameof(userDto), "DTO не может быть null.");
             }
-            var user = new User(userDto.Name, userDto.Password, userDto.Gender, userDto.BirthDate, userDto.Weight, userDto.Height, (ActivityLevel)userDto.ActivityLevel);
+            var user = new User(userDto.Name, userDto.Password, userDto.Gender, userDto.BirthDate, userDto.Weight, userDto.Height, (ActivityLevel)userDto.ActivityLevel,userDto.Email);
             // вопрос нужно ли для пользователя связать напрямую nutritionnorms
 
             return user;

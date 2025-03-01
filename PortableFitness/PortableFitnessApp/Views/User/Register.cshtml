@@ -1,4 +1,4 @@
-﻿@model PortableFitnessApp.DTO.UserLoginDto
+﻿@model PortableFitnessApp.DTO.UserRegisterDto
 @{
 	ViewData["Title"] = "Регистрация";
 }
@@ -16,6 +16,11 @@
 		<h2>Регистрация пользователя</h2>
 		<form id="registration-form" method="post" action="/User/Register" asp-antiforgery="true">
 			<!-- Имя пользователя -->
+			<div class="form-group">
+				<label for="Email">Email</label>
+				<input type="text" id="Email" name="Email" required>
+				<span class="text-danger" asp-validation-for="Email"></span>
+			</div>
 			<div class="form-group">
 				<label for="Name">Имя пользователя</label>
 				<input type="text" id="Name" name="Name" required>

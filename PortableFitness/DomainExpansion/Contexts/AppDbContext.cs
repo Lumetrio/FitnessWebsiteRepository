@@ -39,8 +39,6 @@ namespace Database.Contexts
             // игнорирую ненужные поля
 			modelBuilder.Entity<User>(entity =>
 			{
-				entity.Ignore(u => u.Email);
-				entity.Ignore(u => u.EmailConfirmed);
 				entity.Ignore(u => u.PhoneNumber);
 				entity.Ignore(u => u.PhoneNumberConfirmed);
 				entity.Property(u => u.UserName).IsRequired().HasMaxLength(30);

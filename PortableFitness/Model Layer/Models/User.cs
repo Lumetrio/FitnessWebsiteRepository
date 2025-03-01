@@ -15,19 +15,19 @@ namespace FitnessLogic.Models
 		#region Набор свойств
 		// Игнорируем ненужные поля
 
-		[NotMapped]
-		public override string Email { get; set; }
+		//[NotMapped]
+		//public override string Email { get; set; }
 
-		[NotMapped]
-		public override bool EmailConfirmed { get; set; }
+		//[NotMapped]
+		//public override bool EmailConfirmed { get; set; }
 
 		[NotMapped]
 		public override string PhoneNumber { get; set; }
 
 		[NotMapped]
 		public override bool PhoneNumberConfirmed { get; set; }
-        [NotMapped]
-		public override string? NormalizedEmail { get; set; } // пока хз почему ты не убралась
+  //      [NotMapped]
+		//public override string? NormalizedEmail { get; set; } // пока хз почему ты не убралась
         [NotMapped]
 		public override bool TwoFactorEnabled { get; set; }
 	
@@ -99,7 +99,7 @@ namespace FitnessLogic.Models
         /// Конструктор для десериализации
         /// </summary>
         //[JsonConstructor]
-        public User(string name, string password, Gender gender, DateOnly  birthDate, double weight, double height, ActivityLevel activityLevel)
+        public User(string name, string password, Gender gender, DateOnly  birthDate, double weight, double height, ActivityLevel activityLevel,string Email)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Имя пользователя не может быть пустым", nameof(name)); // такое произойти не должно поэтому пока как доп мера безоп.
             UserName = name;
@@ -113,6 +113,7 @@ namespace FitnessLogic.Models
             Height = height;
             ActivityLevel = activityLevel;
             PasswordHash = password;
+            this.Email = Email;
         }
         /// <summary>
         /// конструктор без параметров для бд

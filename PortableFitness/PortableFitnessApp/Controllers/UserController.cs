@@ -40,7 +40,7 @@ namespace PortableFitnessApp.Controllers
 				// преобразовать в сервисе
 				User user1 = (User)model;
 				// я не хочу просто передавать DTO в сервисы либо делать зависимость. 
-				var result=await UserService.RegisterUserAsync(user1);
+				var result=await UserService.RegisterUserAsync(model);
 				if (result.Success)
 				{
 					//добавить роли
