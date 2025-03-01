@@ -1,0 +1,45 @@
+﻿@model PortableFitnessApp.DTO.UserRegisterDto
+@{
+    ViewData["Title"] = "Авторизация";
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Вход в систему</h2>
+        <form id="login-form" method="post" action="/User/Login" asp-antiforgery="true">
+            <!-- Имя пользователя -->
+            <div class="form-group">
+                <label for="Username">Имя пользователя</label>
+                <input type="text" id="Username" name="Username" required>
+                <span class="text-danger" asp-validation-for="Username"></span>
+            </div>
+            <!-- Пароль -->
+            <div class="form-group">
+                <label for="Password">Пароль:</label>
+                <input type="password" id="Password" name="Password" required>
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+            <!-- Кнопка отправки формы -->
+            <div class="form-group">
+                <button type="submit">Войти</button>
+            </div>
+            <!-- Ссылка для сброса пароля -->
+            <div class="password-reset">
+                <a href="/User/ResetPassword">Сбросить пароль</a>
+            </div>
+        </form>
+    </div>
+    @* Подключаем валидацию на стороне клиента *@
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script src="~/js/login.js"></script>
+    }
+</body>
+</html>

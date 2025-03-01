@@ -4,6 +4,7 @@ using Database.DBModelCommands;
 using FitnessLogic.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PortableFitnessApp.DTO;
 
@@ -34,7 +35,6 @@ namespace PortableFitnessApp.Controllers
 			{
 				return View(model);
 			}
-
 			try
 			{
 				// преобразовать в сервисе
@@ -45,6 +45,10 @@ namespace PortableFitnessApp.Controllers
 				{
 					//добавить роли
 					return RedirectToAction("Index", "Home");
+				}
+				else
+				{
+					throw new Exception(result.ErrorMessage);
 				}
 			}
 			catch (Exception ex)
@@ -61,6 +65,31 @@ namespace PortableFitnessApp.Controllers
 		{
 			return View();
 		}
+
+  //      [HttpPost]
+		//public ActionResult Authorize(UserLoginDto model)
+		//{
+  //          if (!ModelState.IsValid)
+  //              return BadRequest(ModelState);
+
+  //          // Поиск пользователя по имени
+  //          var user = await _userManager.FindByNameAsync(model.Username);
+  //          if (user == null)
+  //              return Unauthorized("Неверное имя пользователя или пароль");
+
+  //          // Проверка пароля
+  //          var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+  //          if (!result.Succeeded)
+  //              return Unauthorized("Неверное имя пользователя или пароль");
+
+  //          // Вход пользователя в систему
+  //          await _signInManager.SignInAsync(user, model.RememberMe);
+  //          return Ok(new { message = "Вход выполнен успешно" });
+  //      }
+
+
+
+
 
 
 		// GET: UserController/Details/5

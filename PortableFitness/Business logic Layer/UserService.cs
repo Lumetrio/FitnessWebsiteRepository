@@ -1,33 +1,49 @@
 ﻿using Database.DBModelCommands;
 using FitnessLogic.Models;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Business_logic_Layer
 {
     public class UserService
     {
         private readonly UserRepository _userRepository;
-		private readonly IPasswordHasher<User> _passwordHasher;
-		public UserService(UserRepository userRepository, IPasswordHasher<User> passwordHasher)
-		{
-			_userRepository = userRepository;
-			_passwordHasher = passwordHasher;
-		}
+        public RoleManager<User> _roleManager { get; }
 
-		public async Task<(bool Success, string ErrorMessage)> RegisterUserAsync(User user)
+        public UserManager<User> _userManager { get; }
+
+        public SignInManager<User> _signInManager { get; }
+        public UserService(RoleManager<User> roleManager, SignInManager<User> signInManager)
+        {
+            _roleManager = roleManager;
+            _signInManager = signInManager;
+        }
+
+        public async Task<(bool Success, string ErrorMessage)> RegisterUserAsync(User user)
         {
             if (!await _userRepository.IsUsernameUniqueAsync(user.UserName))
             {
                 return (false, "Это имя пользователя уже занято. Пожалуйста, выберите другое.");
             }
-         user.PasswordHash=_passwordHasher.HashPassword(user, user.PasswordHash);
-            await _userRepository.CreateAsync(user);
-            return (true, string.Empty);
+            var result = await _userManager.CreateAsync(user, user.PasswordHash);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return (true, string.Empty);
+            }
+            else
+            {
+                return (false, "_userManager didn't create a user");
+            }
+
+        }
+
+
+        public async Task<(bool Success, string ErrorMessage)> LoginUserAsync(User user)
+        {
+
+            return (false, "heh");
         }
     }
 }

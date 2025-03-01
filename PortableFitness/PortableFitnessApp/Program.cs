@@ -25,7 +25,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 //IDENTITY
 
-builder.Services.AddAuthentication()/*.AddCookie(IdentityConstants.ApplicationScheme)*/;
+builder.Services.AddAuthentication().AddCookie("cookie");// возможно ЭТО НЕЛЬЗЯ
 builder.Services.AddAuthorization();
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -94,6 +94,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=User}/{action=Login}/{id?}");
 
 app.Run();
