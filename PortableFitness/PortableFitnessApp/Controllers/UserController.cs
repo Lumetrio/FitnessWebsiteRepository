@@ -2,6 +2,7 @@
 using Database.Contexts;
 using Database.DBModelCommands;
 using FitnessLogic.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
@@ -43,7 +44,7 @@ namespace PortableFitnessApp.Controllers
 				var result=await UserService.RegisterUserAsync(model);
 				if (result.Success)
 				{
-					//добавить роли
+					//добавить роли или 
 					return RedirectToAction("Index", "Home");
 				}
 				else
@@ -66,34 +67,44 @@ namespace PortableFitnessApp.Controllers
 			return View();
 		}
 
-  //      [HttpPost]
-		//public ActionResult Authorize(UserLoginDto model)
-		//{
-  //          if (!ModelState.IsValid)
-  //              return BadRequest(ModelState);
+		[HttpPost]
+		public async Task<ActionResult> Login(UserLoginDto model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+			try
+			{
+				var result = await UserService.LoginUserAsync(model);
 
-  //          // Поиск пользователя по имени
-  //          var user = await _userManager.FindByNameAsync(model.Username);
-  //          if (user == null)
-  //              return Unauthorized("Неверное имя пользователя или пароль");
+				if (result.Success)
+				{
+					return RedirectToAction("Index", "Home");
+				}
+				else
+				{
+					throw new Exception(result.ErrorMessage);
+				}
+			}
+			catch (Exception ex)
+			{
+                ModelState.AddModelError("", $"Ошибка при регистрации: {ex.Message}");
+            }
+            return View(model);
+        }
+		[HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminDashboard()
+        {
+            return View();
+        }
 
-  //          // Проверка пароля
-  //          var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-  //          if (!result.Succeeded)
-  //              return Unauthorized("Неверное имя пользователя или пароль");
-
-  //          // Вход пользователя в систему
-  //          await _signInManager.SignInAsync(user, model.RememberMe);
-  //          return Ok(new { message = "Вход выполнен успешно" });
-  //      }
 
 
 
-
-
-
-		// GET: UserController/Details/5
-		public ActionResult Details(int id)
+        // GET: UserController/Details/5
+        public ActionResult Details(int id)
 		{
 			return View();
 		}

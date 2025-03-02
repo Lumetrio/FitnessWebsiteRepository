@@ -11,7 +11,7 @@ namespace PortableFitnessApp.DTO
             [Required(ErrorMessage = "Пароль не может быть пустым")]
             public string Password { get; set; }
 
-            //public bool RememberMe { get; set; } если будешь true то жить твой кукис будет дольше.
+            public bool RememberMe { get; set; }// если будешь true(зажмешь галку)то жить твой кукис будет дольше. 
         
     }
 }

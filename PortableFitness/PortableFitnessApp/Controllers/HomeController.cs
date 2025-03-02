@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -17,11 +18,13 @@ namespace PortableFitnessApp.Controllers
             return View();
         }
 
+        [Authorize(Roles ="User")]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         //public IActionResult Error()
         //{

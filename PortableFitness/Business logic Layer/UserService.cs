@@ -23,11 +23,16 @@ namespace Business_logic_Layer
 		{
 			User user = (User)model;
 			var result = await _userManager.CreateAsync(user, model.Password);
-
+			
 			if (result.Succeeded)
 			{
 				await _signInManager.SignInAsync(user, isPersistent: false);
-				return (true, string.Empty);
+				await _roleManager.CreateAsync(new IdentityRole("User"));
+                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                await _roleManager.CreateAsync(new IdentityRole("Moderator"));
+                await _roleManager.CreateAsync(new IdentityRole("AuthenticatedUser"));
+                await _userManager.AddToRoleAsync(user, "User");
+                return (true, string.Empty);
 			}
 			else
 			{
@@ -38,10 +43,39 @@ namespace Business_logic_Layer
 		}
 
 
-		public async Task<(bool Success, string ErrorMessage)> LoginUserAsync(User user)
+		public async Task<(bool Success, string ErrorMessage)> LoginUserAsync(UserLoginDto model)
 		{
+		
+            // Поиск пользователя по имени
+            var user = await _userManager.FindByNameAsync(model.Username);
+            if (user == null)
+                return (false,"Неверное имя пользователя или пароль");
 
-			return (false, "heh");
-		}
+            // Проверка пароля
+            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, true);
+            if (!result.Succeeded)
+                return (false,"Неверное имя пользователя или пароль");
+            // Вход пользователя в систему
+            await _signInManager.SignInAsync(user, model.RememberMe);
+            return (true,"");
+        }
+
+
+		//// Создание ролей
+		//public async Task CreateRoles(RoleManager<IdentityRole> roleManager)
+		//{
+		//	// у пользователя с confirmedEmail больше прав 
+		//	string[] roleNames = { "Admin", "Moderator","User","ConfirmedUser" };
+
+		//	foreach (var roleName in roleNames)
+		//	{
+		//		// если роль не существует.
+		//		if (!await roleManager.RoleExistsAsync(roleName))
+		//		{
+		//			// Создаем роль
+		//			await roleManager.CreateAsync(new IdentityRole(roleName));
+		//		}
+		//	}
+		//}
 	}
 }
