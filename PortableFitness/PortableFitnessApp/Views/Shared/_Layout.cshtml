@@ -1,37 +1,53 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-    <link rel="stylesheet" href="~/css/styles.css"> <!-- Общие стили -->
-    @RenderSection("Styles", required: false)
-    @RenderSection("Scripts", required: false)
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>My Website</title>
+	<link rel="stylesheet" href="~/css/_Layout.css"> <!-- Общие стили -->
+	@RenderSection("Styles", required: false)
+	@RenderSection("Scripts", required: false)
 </head>
 <body>
-    <!-- Шапка с меню -->
-    <header>
-        <nav>
-            <ul class="menu">
-                <li><a href="/Home/About">About</a></li>
-                <li><a href="/Food/CountCalories">Count Calories</a></li>
-            </ul>
-            <div class="auth-section">
-                <a href="/User/Authorize" id="auth-button">Login</a>
-            </div>
-        </nav>
-    </header>
+	<!-- Шапка с меню -->
+	<header>
 
-    <!-- Основное содержимое страницы -->
-    <main>
-        @RenderBody() <!-- Сюда вставляется содержимое страницы -->
-    </main>
+		<nav>
+			<ul class="menu">
+				<li><a href="/Home/About">About</a></li>
+				<li><a href="/Food/CountCalories">Count Calories</a></li>
+				<!-- Other menu items -->
+			</ul>
+		</nav>
+		<div class="auth-section">
+			<!-- Authentication links -->
+		</div>
+		<nav>
+			<ul class="menu">
+				<li><a href="/Home/About">About</a></li>
+				<li><a href="/Food/CountCalories">Count Calories</a></li>
+			</ul>
+		</nav>
+		<div class="auth-section">
+			@if (User.Identity.IsAuthenticated)
+			{
+				<a href="/User/Profile">Профиль</a>
+				<a href="/User/Logout">Выйти</a>
+			}
+			else
+			{
+				<a href="/User/Login">Войти</a>
+				<a href="/User/Register">Регистрация</a>
+			}
+		</div>
+	</header>
+	<main>
+		@RenderBody()
+	</main>
 
-    <!-- Подвал -->
-    <footer>
-        <p> © 2023 AK Food Website. Все права защищены</p>
-    </footer>
-
-    <script src="~/js/script.js"></script>
+	<footer>
+		<p>© 2023 AK Food Website. Все права защищены</p>
+	</footer>
+	<script src="~/js/script.js"></script>
 </body>
 </html>

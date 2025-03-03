@@ -21,17 +21,15 @@ namespace Business_logic_Layer
 		}
 		public async Task<(bool Success, string ErrorMessage)> RegisterUserAsync(UserRegisterDto model)
 		{
+
 			User user = (User)model;
 			var result = await _userManager.CreateAsync(user, model.Password);
 			
 			if (result.Succeeded)
 			{
 				await _signInManager.SignInAsync(user, isPersistent: false);
-				await _roleManager.CreateAsync(new IdentityRole("User"));
-                await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                await _roleManager.CreateAsync(new IdentityRole("Moderator"));
-                await _roleManager.CreateAsync(new IdentityRole("AuthenticatedUser"));
-                await _userManager.AddToRoleAsync(user, "User");
+			
+                await _userManager.AddToRoleAsync(user, "Admin");
                 return (true, string.Empty);
 			}
 			else

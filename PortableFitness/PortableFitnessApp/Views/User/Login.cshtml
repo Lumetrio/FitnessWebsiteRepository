@@ -1,50 +1,55 @@
 ﻿@model PortableFitnessApp.DTO.UserLoginDto
 @{
-	ViewData["Title"] = "Авторизация";
+    ViewData["Title"] = "Авторизация";
+    Layout = "_Layout";
 }
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewData["Title"]</title>
-	<link rel="stylesheet" href="~/css/Login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Login.css">
 </head>
 <body>
-	<div class="login-container">
-		<h2>Вход в систему</h2>
-		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-		<form id="login-form" method="post" action="/User/Login" asp-antiforgery="true">
-			<!-- Имя пользователя -->
-			<div class="form-group">
-				<label for="Username">Имя пользователя</label>
-				<input type="text" id="Username" name="Username" required>
-				<span class="text-danger" asp-validation-for="Username"></span>
-			</div>
-			<!-- Пароль -->
-			<div class="form-group">
-				<label for="Password">Пароль:</label>
-				<input type="password" id="Password" name="Password" required>
-				<span class="text-danger" asp-validation-for="Password"></span>
-			</div>
-			<!-- Кнопка отправки формы -->
-			<div class="form-group">
-				<button type="submit">Войти</button>
-			</div>
+    <div class="login-form">
+        <h2>Вход в систему</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-		</form>
-		<!-- Ссылка для сброса пароля -->
-		<div class="password-reset">
-			<a href="/User/ResetPassword">Сбросить пароль</a>
-		</div>
-		<div class="register-link">
-			<a href="/User/Register">Регистрация</a>
-		</div>
-	</div>
-	@* Подключаем валидацию на стороне клиента *@
-	@section Scripts {
-		<partial name="_ValidationScriptsPartial" />
-		<script src="~/js/login.js"></script>
-	}
+        <form id="login-form" method="post" action="/User/Login" asp-antiforgery="true">
+            <!-- Имя пользователя -->
+            <div class="form-group">
+                <label for="Username">Имя пользователя</label>
+                <input type="text" id="Username" name="Username" required>
+                <span class="text-danger" asp-validation-for="Username"></span>
+            </div>
+            <!-- Пароль -->
+            <div class="form-group">
+                <label for="Password">Пароль:</label>
+                <input type="password" id="Password" name="Password" required>
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+            <!-- Кнопка отправки формы -->
+            <div class="form-group">
+                <button type="submit">Войти</button>
+            </div>
+        </form>
+
+        <!-- Ссылка для регистрации -->
+        <div class="register-link">
+            <a href="/User/Register">Регистрация</a>
+        </div>
+        <!-- Ссылка для сброса пароля -->
+        <div class="password-reset">
+            <a href="/User/ResetPassword">Забыли пароль?</a>
+        </div>
+    </div>
+
+    @* Подключаем валидацию на стороне клиента *@
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script src="~/js/login.js"></script>
+    }
 </body>
 </html>

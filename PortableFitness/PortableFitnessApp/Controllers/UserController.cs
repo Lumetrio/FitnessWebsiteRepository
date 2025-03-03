@@ -70,6 +70,7 @@ namespace PortableFitnessApp.Controllers
 		[HttpPost]
 		public async Task<ActionResult> Login(UserLoginDto model)
 		{
+
 			if (!ModelState.IsValid)
 			{
 				return BadRequest(ModelState);

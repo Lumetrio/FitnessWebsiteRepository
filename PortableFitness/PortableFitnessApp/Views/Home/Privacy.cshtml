@@ -6,3 +6,18 @@
 <p>Use this page to detail your site's privacy policy.</p>
 
 <div> How are you feeling?!</div>
+
+@* <div class="sidebar">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <!-- Пользователь авторизован -->
+        <a href="/Account/Profile">Личный кабинет</a>
+        <a href="/Account/Logout">Выйти</a>
+    }
+    else
+    {
+        <!-- Пользователь не авторизован -->
+        <a href="/Account/Login">Войти</a>
+        <a href="/Account/Register">Регистрация</a>
+    }
+</div> *@

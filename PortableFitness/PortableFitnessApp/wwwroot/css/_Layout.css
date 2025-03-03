@@ -1,0 +1,180 @@
+﻿/* Общие стили для body и шрифтов */
+body {
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #eceef1; /* Светло-серый фон, как на animego.me */
+    color: #333333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Шапка - темный фон с логотипом и меню */
+header {
+    background-color: #2f3136; /* Темно-серый цвет шапки */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    height: 60px;
+    width: 100%;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Навигационное меню */
+nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Стиль основного меню */
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100%;
+}
+
+    .menu li {
+        height: 100%;
+        display: flex;
+    }
+
+    .menu a {
+        text-decoration: none;
+        color: #ffffff; /* Белый цвет текста в меню */
+        font-size: 15px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 15px;
+        transition: background-color 0.2s ease;
+    }
+
+        .menu a:hover {
+            background-color: #3a3c42; /* Темно-серый при наведении */
+            color: #ffffff;
+        }
+
+/* Вторичная навигация (под шапкой) */
+.secondary-nav {
+    background-color: #f2f2f2; /* Светло-серая полоса под шапкой */
+    border-bottom: 1px solid #e5e5e5;
+    padding: 0 15px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+    .secondary-nav a {
+        color: #555555;
+        text-decoration: none;
+        font-size: 14px;
+        padding: 0 10px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+        .secondary-nav a:hover {
+            color: #ff0048; /* Красный цвет при наведении, как на animego */
+        }
+
+/* Секция авторизации */
+.auth-section {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin-right: 15px;
+}
+
+    .auth-section a {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 14px;
+        padding: 0 15px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+        margin-left: 5px;
+    }
+
+        .auth-section a:first-child {
+            background-color: #ff0048; /* Красная кнопка для входа, как на animego */
+            border: 1px solid #ff0048;
+        }
+
+            .auth-section a:first-child:hover {
+                background-color: #e00042;
+            }
+
+        .auth-section a:last-child {
+            border: 1px solid #4d4f55;
+            background-color: transparent;
+        }
+
+            .auth-section a:last-child:hover {
+                background-color: #3a3c42;
+            }
+
+/* Основное содержимое */
+main {
+    flex: 1;
+    padding: 20px;
+    /*background-color: #ffffff;*/ /* Белый фон для контента */
+    margin: 15px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 60px;
+}
+
+/* Подвал */
+footer {
+    background-color: #2f3136; /* Темно-серый фон, как в шапке */
+    color: #8a8c91; /* Светло-серый цвет текста */
+    text-align: center;
+    padding: 8px 0;
+    width: 100%;
+    font-size: 12px;
+    position: fixed;
+    bottom: 0;
+}
+
+/* Логотип сайта */
+.logo {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .menu, .auth-section {
+        width: 100%;
+        justify-content: center;
+    }
+
+    main {
+        margin: 10px;
+        padding: 15px;
+        margin-bottom: 45px;
+    }
+}

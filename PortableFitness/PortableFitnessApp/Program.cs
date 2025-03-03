@@ -28,9 +28,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddAuthentication(options =>
 {
-    
-    //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    //options.DefaultChallengeScheme = Jwt
 }).AddCookie();// возможно Ё“ќ Ќ≈Ћ№«я
 builder.Services.AddAuthorization();
 builder.Services.AddIdentity<User, IdentityRole>(options =>
@@ -71,10 +68,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 
     // ѕути при ошибках аутентификации
     options.LoginPath = "/User/Login";
-    options.AccessDeniedPath = "/User/AccessDenied";
+    options.AccessDeniedPath = "/User/Login"; //  ну либо можно вводить js сообщение что тебе туда нельз€.
 
 
 });
+
 
 
 // сделать в будущем сброс парол€. и email хот€ дл€ этого придЄтс€ нотификаци€ , так что можно по проверке спец вопроса? который тоже будет хэшироватьс€??
@@ -128,6 +126,11 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
     });
 }
+
+
+
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

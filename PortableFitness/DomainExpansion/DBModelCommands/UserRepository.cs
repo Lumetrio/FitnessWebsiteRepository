@@ -12,6 +12,7 @@ namespace Database.DBModelCommands
 {
     /// <summary>
     ///  взаимодействие с репозиторием пользователей в DI со спец логикой на проверку уникальности пользователя.
+    /// Пользователь регается через UserManager. нужно ли через него проверять пользователей? 
     /// </summary>
 
     public class UserRepository : RepositoryGen<User>
@@ -27,6 +28,7 @@ namespace Database.DBModelCommands
         }
         public override async Task CreateAsync(User user)
         {
+
             if (!await IsUsernameUniqueAsync(user.UserName))
             {
                 throw new Exception("User is not unique");
